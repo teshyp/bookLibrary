@@ -9,14 +9,51 @@
 </head>
 
 <body>
- 
-    <div id="firstCard">
 
+<div id="container"> 
+
+    <div id="heading-section">
+    <h1> My Library </h1>
     </div>
 
-    <div id="firstCard">
+    <div id="card-shelf">
 
+                <div id="library-list"> 
+                    
+                    <div id="first-card" class="individual-card">
+                        <p class="title">  Add a book to library </p>
+                        
+                <label for="bookTitle"> </label>
+                <input type="text" id="bookTitle" name="bookTitle" placeholder="Book title" required>
+
+                <label for="bookAuthor"> </label>
+                <input type="text" id="bookAuthor" name="bookAuthor" placeholder="Author Name" required>
+
+                <label for="bookTitle"> </label>
+                <input type="number" id="bookTitle" name="bookTitle" placeholder="No of pages" required>
+                                    
+                <button class="add"> Add </button>
+
+                    </div>
+
+                    <div class="individual-card">
+                        <p class="title">  Example title </p>
+                        <p class="author"> Example Author </p>
+                        <p class="pages"> Pages: <span class="noPages"> X </span> </p>
+                        <span> 
+                            <button class="read-btn" value="read"> Read </button>
+                            <button class="delete-btn" value="Not read"> Delete </button>
+                        </span>
+     
+
+
+                    </div>
+
+                </div>
     </div>
+
+</div>
+
 
 
 </body>
