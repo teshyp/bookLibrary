@@ -2,10 +2,9 @@
 const libList = document.getElementById("library-list");
 const firstCard = document.getElementById("first-card");
 const addBtn = document.getElementById("add");
-
+let newDelBtn;
 
 // Library object
-
 let myLibrary = [
     {
         title: 'Harry Potter',
@@ -30,7 +29,7 @@ function Book(title, author, pages, read) {
     this.read = read
 }
 
-// Function to create book using input data
+// Function to create book object using input data
 function addBookToLibrary(title, author, pages, read) {
     let newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
@@ -38,82 +37,120 @@ function addBookToLibrary(title, author, pages, read) {
     console.log(newBook)
 }
 
+// Function to display new book to Library
+
 function printSingleBook() {
+
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("individual-card");
+    cardDiv.setAttribute("data-location", [i])
     libList.appendChild(cardDiv);
 
-    let newTitleP = document.createElement("p");
+    const newTitleP = document.createElement("p");
     newTitleP.innerText = myLibrary[i].title;
+    newTitleP.setAttribute("data-location", [i])
     cardDiv.appendChild(newTitleP)
 
-    let newAuthorP = document.createElement("p");
+    const newAuthorP = document.createElement("p");
     newAuthorP.innerText = myLibrary[i].author;
+    newAuthorP.setAttribute("data-location", [i])
     cardDiv.appendChild(newAuthorP)
 
-    let pagesNo = document.createElement("p");
+    const pagesNo = document.createElement("p");
     pagesNo.innerText = myLibrary[i].pages;
+    pagesNo.setAttribute("data-location", [i])
     cardDiv.appendChild(pagesNo)
 
-    let btnSpan = document.createElement("span");
-    cardDiv.appendChild(btnSpan)
+    const btnSpan = document.createElement("span");
+    btnSpan.setAttribute("data-location", [i])
+    cardDiv.appendChild(btnSpan);
 
     let readBtn = document.createElement("button");
     readBtn.innerHTML = myLibrary[i].read;
     readBtn.classList.add("read-btn");
+    readBtn.setAttribute("data-location", [i]);
     readBtn.value = "not-read"
     btnSpan.appendChild(readBtn);
 
-    let newDelBtn = document.createElement("button");
+    const newDelBtn = document.createElement("button");
     newDelBtn.innerHTML = "Delete";
-    newDelBtn.classList.add("delete-btn")
+    newDelBtn.classList.add("delete-btn");
+    newDelBtn.setAttribute("data-location", myLibrary.length - 1);
     btnSpan.appendChild(newDelBtn);
 
-    console.log(myLibrary[i]);
-}
+    delBookLocation = newDelBtn.getAttribute("data-location");
 
-// Function to display books in library
+    newDelBtn.addEventListener("click", function () {
+        let dataLocation = parseInt(this.getAttribute("data-location"));
+        console.log(dataLocation)
+        for (i = 0;i <= myLibrary.length;i++) {
+            if (dataLocation == i) {
+                myLibrary.splice(i, 1);
+                console.log("Del btn working")
+            }
+        }
+    })
+};
 
+// Function to display all books in library
 function printBooks() {
     for (i = 0;i < myLibrary.length;i++) {
 
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("individual-card");
+        cardDiv.setAttribute("data-location", [i])
         libList.appendChild(cardDiv);
 
-        let newTitleP = document.createElement("p");
+        const newTitleP = document.createElement("p");
         newTitleP.innerText = myLibrary[i].title;
+        newTitleP.setAttribute("data-location", [i])
         cardDiv.appendChild(newTitleP)
 
-        let newAuthorP = document.createElement("p");
+        const newAuthorP = document.createElement("p");
         newAuthorP.innerText = myLibrary[i].author;
+        newAuthorP.setAttribute("data-location", [i])
         cardDiv.appendChild(newAuthorP)
 
-        let pagesNo = document.createElement("p");
+        const pagesNo = document.createElement("p");
         pagesNo.innerText = myLibrary[i].pages;
+        pagesNo.setAttribute("data-location", [i])
         cardDiv.appendChild(pagesNo)
 
-        let btnSpan = document.createElement("span");
-        cardDiv.appendChild(btnSpan)
+        const btnSpan = document.createElement("span");
+        btnSpan.setAttribute("data-location", [i])
+        cardDiv.appendChild(btnSpan);
 
-        let readBtn = document.createElement("button");
+        const readBtn = document.createElement("button");
         readBtn.innerHTML = myLibrary[i].read;
         readBtn.classList.add("read-btn");
+        readBtn.setAttribute("data-location", [i]);
         readBtn.value = "not-read"
         btnSpan.appendChild(readBtn);
 
-        let newDelBtn = document.createElement("button");
+        const newDelBtn = document.createElement("button");
         newDelBtn.innerHTML = "Delete";
-        newDelBtn.classList.add("delete-btn")
+        newDelBtn.classList.add("delete-btn");
+        newDelBtn.setAttribute("data-location", [i]);
         btnSpan.appendChild(newDelBtn);
 
-        console.log(myLibrary[i]);
+
+        newDelBtn.addEventListener("click", function () {
+            let dataLocation = parseInt(this.getAttribute("data-location"));
+            console.log(dataLocation)
+            for (i = 0;i <= myLibrary.length;i++) {
+                if (dataLocation == i) {
+                    myLibrary.splice(i, 1);
+                    console.log("Del btn working")
+                    cardDiv.remove()
+                }
+            }
+            // console.log(this.getAttribute("data-location"))
+        })
+
     }
 }
 
-printBooks()
-
-//Adding new books to library
+//Adding new book objects to library
 addBtn.addEventListener("click", function () {
     const bookTitle = document.getElementById("bookTitle").value;
     const bookAuthor = document.getElementById("bookAuthor").value;
@@ -123,8 +160,24 @@ addBtn.addEventListener("click", function () {
 })
 
 
+function delBook(delBookLocation) {
+    for (i = 0;i < myLibrary.length;i++) {
+        if (delBookLocation === myLibrary[i]) {
+            myLibrary.splice(i, 1);
+            console.log(myLibrary)
+            printBooks()
+        }
+    }
+}
+
+
+printBooks()
+
+
+    // get the location from the data-location from the clicked delete button
+    // use same data location [i] to remove all the elements with the same data-location
+
+
 // Add a button on each book’s display to remove the book from the library.
 // You will need to associate your DOM elements with the actual book objects in some way. One easy solution is giving them a data-attribute that corresponds to the index of the library array.
 // Add a button on each book’s display to change its read status. - To facilitate this you will want to create the function that toggles a book’s read status on your Book prototype instance.
-
-
