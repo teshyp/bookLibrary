@@ -16,10 +16,9 @@ let myLibrary = [
         title: 'Yoga Book',
         author: 'Shiva',
         pages: 809,
-        read: "Not read",
-    }
+        read: "To read",
+    },
 ];
-
 
 // Constructor function to create book object
 function Book(title, author, pages, read) {
@@ -38,7 +37,6 @@ function addBookToLibrary(title, author, pages, read) {
 }
 
 // Function to display new book to Library
-
 function printSingleBook() {
 
     const cardDiv = document.createElement("div");
@@ -48,49 +46,56 @@ function printSingleBook() {
 
     const newTitleP = document.createElement("p");
     newTitleP.innerText = myLibrary[[myLibrary.length - 1]].title;
-    newTitleP.setAttribute("data-location", [myLibrary.length - 1])
+    // newTitleP.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(newTitleP)
 
     const newAuthorP = document.createElement("p");
     newAuthorP.innerText = myLibrary[[myLibrary.length - 1]].author;
-    newAuthorP.setAttribute("data-location", [myLibrary.length - 1])
+    // newAuthorP.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(newAuthorP)
 
     const pagesNo = document.createElement("p");
     pagesNo.innerText = myLibrary[[myLibrary.length - 1]].pages;
-    pagesNo.setAttribute("data-location", [myLibrary.length - 1])
+    // pagesNo.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(pagesNo)
 
     const btnSpan = document.createElement("span");
-    btnSpan.setAttribute("data-location", [myLibrary.length - 1])
+    // btnSpan.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(btnSpan);
 
     let readBtn = document.createElement("button");
     readBtn.innerHTML = myLibrary[myLibrary.length - 1].read;
     readBtn.classList.add("read-btn");
-    readBtn.setAttribute("data-location", myLibrary.length - 1);
-    readBtn.value = "not-read"
+    // readBtn.setAttribute("data-location", myLibrary.length - 1);
+    readBtn.value = "To read"
     btnSpan.appendChild(readBtn);
+
+    //Read Button togglge for new books
+    readBtn.addEventListener("click", function () {
+        if (this.value == "Read") {
+            this.value = "To read";
+            this.innerHTML = this.value;
+            console.log(this.value)
+        } else if (this.value == "To read") {
+            this.value = "Read";
+            this.innerHTML = this.value;
+            console.log(this.value)
+        }
+    });
 
     const newDelBtn = document.createElement("button");
     newDelBtn.innerHTML = "Delete";
     newDelBtn.classList.add("delete-btn");
-    newDelBtn.setAttribute("data-location", myLibrary.length - 1);
+    newDelBtn.setAttribute("data-location", cardDiv.getAttribute("data-location"));
     btnSpan.appendChild(newDelBtn);
 
-    delBookLocation = newDelBtn.getAttribute("data-location");
-
     //event listener to remove book from library
+    delBookLocation = newDelBtn.getAttribute("data-location");
     newDelBtn.addEventListener("click", function () {
         let dataLocation = parseInt(this.getAttribute("data-location"));
-        console.log(dataLocation)
-        for (i = 0;i <= myLibrary.length;i++) {
-            if (dataLocation == i) {
-                myLibrary.splice(i, 1);
-                cardDiv.remove()
-                console.log("Del btn working")
-            }
-        }
+        console.log("Delete button working on NEWLY added books" + dataLocation)
+        myLibrary.splice(dataLocation, 1);
+        cardDiv.remove(dataLocation);
     })
 };
 
@@ -105,47 +110,55 @@ function printBooks() {
 
         const newTitleP = document.createElement("p");
         newTitleP.innerText = myLibrary[i].title;
-        newTitleP.setAttribute("data-location", [i])
+        // newTitleP.setAttribute("data-location", [i])
         cardDiv.appendChild(newTitleP)
 
         const newAuthorP = document.createElement("p");
         newAuthorP.innerText = myLibrary[i].author;
-        newAuthorP.setAttribute("data-location", [i])
+        // newAuthorP.setAttribute("data-location", [i])
         cardDiv.appendChild(newAuthorP)
 
         const pagesNo = document.createElement("p");
         pagesNo.innerText = myLibrary[i].pages;
-        pagesNo.setAttribute("data-location", [i])
+        // pagesNo.setAttribute("data-location", [i])
         cardDiv.appendChild(pagesNo)
 
         const btnSpan = document.createElement("span");
-        btnSpan.setAttribute("data-location", [i])
+        // btnSpan.setAttribute("data-location", [i])
         cardDiv.appendChild(btnSpan);
 
         const readBtn = document.createElement("button");
         readBtn.innerHTML = myLibrary[i].read;
         readBtn.classList.add("read-btn");
-        readBtn.setAttribute("data-location", [i]);
-        readBtn.value = "not-read"
+        // readBtn.setAttribute("data-location", [i]);
+        readBtn.value = myLibrary[i].read;
         btnSpan.appendChild(readBtn);
+
+        //Read Button toggle - existing books
+        readBtn.addEventListener("click", function () {
+            if (this.value == "Read") {
+                this.value = "To read";
+                this.innerHTML = this.value;
+                console.log(this.value)
+            } else if (this.value == "To read") {
+                this.value = "Read";
+                this.innerHTML = this.value;
+                console.log(this.value)
+            }
+        });
 
         const newDelBtn = document.createElement("button");
         newDelBtn.innerHTML = "Delete";
         newDelBtn.classList.add("delete-btn");
-        newDelBtn.setAttribute("data-location", [i]);
+        newDelBtn.setAttribute("data-location", cardDiv.getAttribute("data-location"));
         btnSpan.appendChild(newDelBtn);
 
+        // Delete book event listener
         newDelBtn.addEventListener("click", function () {
             let dataLocation = parseInt(this.getAttribute("data-location"));
-            console.log(dataLocation)
-            for (i = 0;i <= myLibrary.length;i++) {
-                if (dataLocation == i) {
-                    myLibrary.splice(i, 1);
-                    console.log("Del btn working")
-                    cardDiv.remove()
-                }
-            }
-            // console.log(this.getAttribute("data-location"))
+            console.log("Delete button working: existing library" + dataLocation)
+            myLibrary.splice(dataLocation, 1);
+            cardDiv.remove(dataLocation);
         })
 
     }
@@ -157,23 +170,8 @@ addBtn.addEventListener("click", function () {
     const bookAuthor = document.getElementById("bookAuthor").value;
     const bookPages = document.getElementById("bookPages").value;
     addBookToLibrary(bookTitle, bookAuthor, bookPages, "Not Read");
-
 })
 
 
-// function delBook(delBookLocation) {
-//     for (i = 0;i < myLibrary.length;i++) {
-//         if (delBookLocation === myLibrary[i]) {
-//             myLibrary.splice(i, 1);
-//             console.log(myLibrary)
-//             printBooks()
-//         }
-//     }
-// }
-
 
 printBooks()
-
-
-
-// Add a button on each book’s display to change its read status. - To facilitate this you will want to create the function that toggles a book’s read status on your Book prototype instance.
