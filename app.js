@@ -18,6 +18,18 @@ let myLibrary = [
         pages: 809,
         read: "To read",
     },
+    {
+        title: 'The Lord of the Rings',
+        author: 'J.R.R. Tolkein',
+        pages: 309,
+        read: "To read",
+    },
+    {
+        title: 'The Alchemist',
+        author: 'Paulo Coelho',
+        pages: 129,
+        read: "To read",
+    },
 ];
 
 // Constructor function to create book object
@@ -45,28 +57,26 @@ function printSingleBook() {
     libList.appendChild(cardDiv);
 
     const newTitleP = document.createElement("p");
+    newTitleP.classList.add("title");
     newTitleP.innerText = myLibrary[[myLibrary.length - 1]].title;
-    // newTitleP.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(newTitleP)
 
     const newAuthorP = document.createElement("p");
+    newAuthorP.classList.add("author");
     newAuthorP.innerText = myLibrary[[myLibrary.length - 1]].author;
-    // newAuthorP.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(newAuthorP)
 
     const pagesNo = document.createElement("p");
+    pagesNo.classList.add("pages");
     pagesNo.innerText = myLibrary[[myLibrary.length - 1]].pages;
-    // pagesNo.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(pagesNo)
 
     const btnSpan = document.createElement("span");
-    // btnSpan.setAttribute("data-location", [myLibrary.length - 1])
     cardDiv.appendChild(btnSpan);
 
     let readBtn = document.createElement("button");
     readBtn.innerHTML = myLibrary[myLibrary.length - 1].read;
     readBtn.classList.add("read-btn");
-    // readBtn.setAttribute("data-location", myLibrary.length - 1);
     readBtn.value = "To read"
     btnSpan.appendChild(readBtn);
 
@@ -109,28 +119,26 @@ function printBooks() {
         libList.appendChild(cardDiv);
 
         const newTitleP = document.createElement("p");
+        newTitleP.classList.add("title");
         newTitleP.innerText = myLibrary[i].title;
-        // newTitleP.setAttribute("data-location", [i])
         cardDiv.appendChild(newTitleP)
 
         const newAuthorP = document.createElement("p");
+        newAuthorP.classList.add("author");
         newAuthorP.innerText = myLibrary[i].author;
-        // newAuthorP.setAttribute("data-location", [i])
         cardDiv.appendChild(newAuthorP)
 
         const pagesNo = document.createElement("p");
+        pagesNo.classList.add("pages");
         pagesNo.innerText = myLibrary[i].pages;
-        // pagesNo.setAttribute("data-location", [i])
         cardDiv.appendChild(pagesNo)
 
         const btnSpan = document.createElement("span");
-        // btnSpan.setAttribute("data-location", [i])
         cardDiv.appendChild(btnSpan);
 
         const readBtn = document.createElement("button");
-        readBtn.innerHTML = myLibrary[i].read;
         readBtn.classList.add("read-btn");
-        // readBtn.setAttribute("data-location", [i]);
+        readBtn.innerHTML = myLibrary[i].read;
         readBtn.value = myLibrary[i].read;
         btnSpan.appendChild(readBtn);
 
@@ -148,8 +156,8 @@ function printBooks() {
         });
 
         const newDelBtn = document.createElement("button");
-        newDelBtn.innerHTML = "Delete";
         newDelBtn.classList.add("delete-btn");
+        newDelBtn.innerHTML = "Delete";
         newDelBtn.setAttribute("data-location", cardDiv.getAttribute("data-location"));
         btnSpan.appendChild(newDelBtn);
 
@@ -169,7 +177,7 @@ addBtn.addEventListener("click", function () {
     const bookTitle = document.getElementById("bookTitle").value;
     const bookAuthor = document.getElementById("bookAuthor").value;
     const bookPages = document.getElementById("bookPages").value;
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, "Not Read");
+    addBookToLibrary(bookTitle, bookAuthor, bookPages, "To read");
 })
 
 
