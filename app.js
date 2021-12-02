@@ -68,7 +68,7 @@ function printSingleBook() {
 
     const pagesNo = document.createElement("p");
     pagesNo.classList.add("pages");
-    pagesNo.innerText = myLibrary[[myLibrary.length - 1]].pages;
+    pagesNo.innerText = myLibrary[[myLibrary.length - 1]].pages + " pages";
     cardDiv.appendChild(pagesNo)
 
     const btnSpan = document.createElement("span");
@@ -130,7 +130,7 @@ function printBooks() {
 
         const pagesNo = document.createElement("p");
         pagesNo.classList.add("pages");
-        pagesNo.innerText = myLibrary[i].pages;
+        pagesNo.innerText = myLibrary[i].pages + " pages";
         cardDiv.appendChild(pagesNo)
 
         const btnSpan = document.createElement("span");
